@@ -1,6 +1,5 @@
 import Sequelize from 'sequelize';
 import db from '../config/connection.js';
-import BookModel from './BookModel.js';
 
 
 const CategoryModel =  db.define("categories",{

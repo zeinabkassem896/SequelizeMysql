@@ -1,12 +1,11 @@
 import AuthorModel from '../models/index.js';
-import AuthorBookModel from '../models/AuthorBook.js';
-import BookModel from '../models/BookModel.js';
+import BookModel from '../models/index.js';
 
 
 
 export async function getAll(req, res) {
     try{
-    let getdata = await AuthorModel.AuthorModel.findAll();
+    let getdata = await AuthorModel.AuthorModel.findAll({ include: ['books'] });
     if(getdata){
             res.json({
                 success: true,
@@ -28,7 +27,7 @@ export async function getById(req, res) {
     try{
         let {id} = req.params;
 
-        let getdata = await AuthorModel.findByPk(id);
+        let getdata = await AuthorModel.AuthorModel.findByPk(id,{include:['books']});
         if(getdata){
                 res.json({
                     success: true,
@@ -48,16 +47,25 @@ export async function getById(req, res) {
 
 export async function create(req, res) {
     try{
-        let getdata = await AuthorModel.AuthorModel.create(req.body);
-        if(getdata){
-                res.json({
+        let data = await AuthorModel.AuthorModel.create(req.body);
+        let {bookId} = req.body;
+        
+        if(bookId){
+            let book = await BookModel.BookModel.findByPk(bookId);
+            await data.addBook(book);
+        }
+
+        if(data){
+                res.status(201).json({
+                    status: 201,
                     success: true,
                     message:"Data Fetch Successfully",
-                    data:getdata
+                    data:data
                 });
             }
     }catch(err){
         res.status(500).json({
+            status:500,
             success: false,
             message:`Something went wrong, ${err.message}`,
             data: null
