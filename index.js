@@ -28,8 +28,8 @@ app.get('/',(req,res)=>{
 })
 
 app.use('/admins', AdminRoute)
-app.use('/categories', verifyToken,CatgeoryRoute)
-app.use('/authors', verifyToken, AuthorRoute)
+app.use('/categories',CatgeoryRoute)
+app.use('/authors', AuthorRoute)
 app.use('/books', BookRoute)
 
 

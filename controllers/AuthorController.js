@@ -49,10 +49,9 @@ export async function create(req, res) {
     try{
         let data = await AuthorModel.AuthorModel.create(req.body);
         let {bookId} = req.body;
-        
         if(bookId){
-            let book = await BookModel.BookModel.findByPk(bookId);
-            await data.addBook(book);
+            let getBook = await BookModel.BookModel.findByPk(bookId);
+            data.addBook(getBook);
         }
 
         if(data){

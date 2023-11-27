@@ -4,6 +4,7 @@ import BookModel from '../models/index.js';
 export async function getAll(req, res) {
     try{
     let getdata = await BookModel.BookModel.findAll({ include: ["categories","authors"] });
+
     if(getdata){
             res.json({
                 success: true,
