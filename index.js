@@ -6,6 +6,9 @@ import cors from 'cors';
 import CatgeoryRoute from './routes/CategoryRoute.js';
 import AuthorRoute from './routes/AuthorRoute.js';
 import BookRoute from './routes/BookRoute.js';
+import AdminRoute from "./routes/AdminRoute.js";
+
+import {verifyToken} from './middleware/auth.js';
 
 
 dotenv.config();
@@ -24,8 +27,9 @@ app.get('/',(req,res)=>{
  res.send("hello world")
 })
 
-app.use('/categories', CatgeoryRoute)
-app.use('/authors', AuthorRoute)
+app.use('/admins', AdminRoute)
+app.use('/categories', verifyToken,CatgeoryRoute)
+app.use('/authors', verifyToken, AuthorRoute)
 app.use('/books', BookRoute)
 
 
