@@ -82,18 +82,3 @@ export async function deleteData(req, res) {
         })
     }
 }
-
-export async function fetchLBA(req, res){
-
-    await fetch('https://fibalivestats.dcd.shared.geniussports.com/data/2372395/data.json')
-    .then(res => res.json())
-    .then(text => console.log("zeinab",text))
-    .catch(err => console.error(err))
-    .finally(() => res.end());
-
-    res.json({
-        success: true,
-        message:"Data Fetch Successfully",
-        data:null
-    });
-}
