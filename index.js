@@ -27,7 +27,7 @@ app.get('/',(req,res)=>{
  res.send("hello world")
 })
 
-app.use('/admins', AdminRoute)
+app.use('/admins',verifyToken, AdminRoute)
 app.use('/categories',CatgeoryRoute)
 app.use('/authors', AuthorRoute)
 app.use('/books', BookRoute)
